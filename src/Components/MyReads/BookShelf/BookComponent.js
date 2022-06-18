@@ -60,7 +60,7 @@ const BookShelfChanger = (props) => {
         <div className="book-shelf-changer">
             <select defaultValue={props.shelf}>
                 <option
-                    value="none"
+                    value="moveto"
                     disabled>
                     Move to...
                 </option>
@@ -84,7 +84,7 @@ const BookShelfChanger = (props) => {
                     Read
                 </option>
                 <option
-                    value="nil"
+                    value="none"
                     onClick={changeShelf}
 
                 >

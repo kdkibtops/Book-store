@@ -8,8 +8,8 @@ export const MyReads = (props) => {
     const currentlyReading = srcbooks.filter(book => book.shelf === `currentlyReading`);
     const wantToRead = srcbooks.filter(book => book.shelf === `wantToRead`);
     const toRead = srcbooks.filter(book => book.shelf === `read`);
-    const nil = srcbooks.filter(book => book.shelf === `nil`);
-    const library = [currentlyReading, wantToRead, toRead, nil];
+    const none = srcbooks.filter(book => book.shelf === `none`);
+    const library = [currentlyReading, wantToRead, toRead, none];
 
     return (
         <div className="list-books">
@@ -30,14 +30,14 @@ export const MyReads = (props) => {
                                     case 'read':
                                         shelfName = 'Read'
                                         break;
-                                    case 'nil':
-                                        shelfName = 'nil'
+                                    case 'none':
+                                        shelfName = 'none'
                                         break;
                                     default:
-                                        shelfName = 'nil'
+                                        shelfName = 'none'
                                         break;
                                 }
-                                if (shelfName !== 'nil') {
+                                if (shelfName !== 'none') {
                                     return (
                                         <BookShelf
                                             key={`${shelfName.length}+${booklist.length}`}
