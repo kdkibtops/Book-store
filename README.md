@@ -2,6 +2,14 @@
 ### About:
 This project is used for managing and categorizing the books.
 The project has 2 functiona pages:
+
+# Installing the project:
+- Clone the project to local repository.
+- Install  project dependencies with `npm install` in directory terminal.
+
+
+# Project architecture:
+
 ## Main page:
     - It displays all the book in their corresponding shlef
     - Each book has a dropdown menu that allow for moving this book to another shelf.
@@ -15,12 +23,26 @@ The project has 2 functiona pages:
     - Searchpage will update dynamically while your are typing, at any time you can click show all to show all available books.
     - In the search page, you can also categorize the books in the shelves.
 
+## Components:
+    - Search Page:
+        - Search Bar:
+            - Search Bar Input
+            - Back Button
+        - Search Results:
+            - Book components.
+    - Main Page:
+        - Title
+        - Book Shlef (3 shelves):
+            Book component
+
 # Dependencies:
     - To install all dependencies: run 'npm install' in the folder terminal.
     - Project was developed using creat-react-app
 
 
 # By: Mustafa Heidar, kdkibtops@gmail.com
+
+
 # According to create-react-app
 ## Available Scripts
 
