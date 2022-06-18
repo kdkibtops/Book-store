@@ -1,6 +1,7 @@
 import { AddBook } from "./AddBook"
 import { BookShelf } from "./BookShelf"
 import { Title } from "./Title"
+import PropTypes from 'prop-types'
 
 export const MyReads = (props) => {
     const srcbooks = props.library
@@ -55,4 +56,8 @@ export const MyReads = (props) => {
             <AddBook />
         </div>
     )
+}
+MyReads.propTypes = {
+    library: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
 }

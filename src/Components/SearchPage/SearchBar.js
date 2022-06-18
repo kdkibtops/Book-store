@@ -20,7 +20,6 @@ export const SearchBar = (props) => {
         </div>
     )
 }
-
 SearchBar.propTypes = {
     query: PropTypes.string,
     updateQuery: PropTypes.func.isRequired

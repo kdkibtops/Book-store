@@ -15,7 +15,6 @@ export const BookShelf = (props) => {
         </div>
     )
 }
-
 BookShelf.propTypes = {
     title: PropTypes.string.isRequired,
     bookList: PropTypes.array.isRequired,

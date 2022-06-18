@@ -12,7 +12,6 @@ export const SearchBarInput = (props) => {
         </div>
     )
 }
-
 SearchBarInput.propTypes = {
     query: PropTypes.string,
     handleSearch: PropTypes.func.isRequired

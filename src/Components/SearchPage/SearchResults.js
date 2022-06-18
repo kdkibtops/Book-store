@@ -8,11 +8,8 @@ export const SearchResults = (props) => {
                 {
                     props.library.map((book) => {
                         return <BookComponent
-                            key={book.bookTitle}
-                            bookTitle={book.bookTitle}
-                            url={book.url}
-                            shelf={book.shelf}
-                            bookAuthors={book.bookAuthors}
+                            key={book.id}
+                            _book={book}
                             changeShelf={props.changeShelf}
                         />
                     })
@@ -21,7 +18,6 @@ export const SearchResults = (props) => {
         </div>
     )
 }
-
 SearchResults.propTypes = {
     library: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired

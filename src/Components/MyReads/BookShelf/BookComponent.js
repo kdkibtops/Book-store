@@ -4,18 +4,15 @@ export const BookComponent = (props) => {
     return (
         <li>
             <div className="book">
-                <BookTop url={props.url} shelf={props.shelf} changeShelf={props.changeShelf} />
-                <BookTitle bookTitle={props.bookTitle} />
-                <BookAuthors bookAuthors={props.bookAuthors} />
+                <BookTop book={props._book} url={props._book.url} shelf={props._book.shelf} changeShelf={props.changeShelf} />
+                <BookTitle bookTitle={props._book.bookTitle} />
+                <BookAuthors bookAuthors={props._book.bookAuthors} />
             </div>
         </li>
     )
 }
 BookComponent.propTypes = {
-    bookTitle: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    shelf: PropTypes.string.isRequired,
-    bookAuthors: PropTypes.array.isRequired,
+    _book: PropTypes.object.isRequired,
     changeShelf: PropTypes.func.isRequired
 }
 
@@ -26,6 +23,7 @@ const BookTop = (props) => {
                 url={props.url}
             />
             <BookShelfChanger
+                book={props.book}
                 shelf={props.shelf}
                 changeShelf={props.changeShelf}
             />
@@ -56,7 +54,7 @@ BookCover.propTypes = {
 
 const BookShelfChanger = (props) => {
     const changeShelf = (eve) => {
-        props.changeShelf(eve.target.value)
+        props.changeShelf(props.book, eve.target.value)
     }
     return (
         <div className="book-shelf-changer">
@@ -106,7 +104,6 @@ const BookTitle = (props) => {
         <div className="book-title">{props.bookTitle}</div>
     )
 }
-
 BookTitle.propTypes = {
     bookTitle: PropTypes.string.isRequired
 }

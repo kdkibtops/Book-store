@@ -109,6 +109,23 @@ body,
   font-size: 0;
 }
 
+.search-books-showing {
+  padding: 5rem 10rem 0 10rem;
+}
+
+.search-books-showing span {
+  margin: auto;
+}
+
+.search-books-showing button {
+  color: blue;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  cursor: pointer;
+}
+
 .search-books-results {
   padding: 80px 10px 20px;
 }
