@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types'
 
+
 export const BookComponent = (props) => {
+
     return (
         <li>
             <div className="book">
-                <BookTop book={props._book} url={props._book.url} shelf={props._book.shelf} changeShelf={props.changeShelf} />
-                <BookTitle bookTitle={props._book.bookTitle} />
-                <BookAuthors bookAuthors={props._book.bookAuthors} />
+                <BookTop
+                    book={props._book}
+                    changeShelf={props.changeShelf}
+                />
+                <BookTitle bookTitle={props._book.title} />
+                <BookAuthors bookAuthors={props._book.authors} />
             </div>
         </li>
     )
@@ -17,26 +22,30 @@ BookComponent.propTypes = {
 }
 
 const BookTop = (props) => {
+    const url = props.book.imageLinks
+        ? `url("${props.book.imageLinks.smallThumbnail}")`
+        : `url("../../icons/noprev.png")`
     return (
         <div className="book-top">
             <BookCover
-                url={props.url}
+                url={url}
+
             />
             <BookShelfChanger
                 book={props.book}
-                shelf={props.shelf}
+                shelf={props.book.shelf}
                 changeShelf={props.changeShelf}
             />
         </div>
     )
 }
 BookTop.propTypes = {
-    url: PropTypes.string.isRequired,
-    shelf: PropTypes.string.isRequired,
+    book: PropTypes.object.isRequired,
     changeShelf: PropTypes.func.isRequired
 }
 
 const BookCover = (props) => {
+
     return (
         <div
             className="book-cover"
@@ -45,11 +54,12 @@ const BookCover = (props) => {
                 height: 193,
                 backgroundImage: props.url
             }}
+
         ></div>
     )
 }
 BookCover.propTypes = {
-    url: PropTypes.string.isRequired
+    url: PropTypes.string
 }
 
 const BookShelfChanger = (props) => {
@@ -58,7 +68,9 @@ const BookShelfChanger = (props) => {
     }
     return (
         <div className="book-shelf-changer">
-            <select defaultValue={props.shelf}>
+            <select defaultValue={props.book.shelf ? props.book.shelf : 'none'}
+                onChange={(eve) => { changeShelf(eve) }}
+            >
                 <option
                     value="moveto"
                     disabled>
@@ -66,27 +78,20 @@ const BookShelfChanger = (props) => {
                 </option>
                 <option
                     value="currentlyReading"
-                    onClick={changeShelf}
                 >
                     Currently Reading
                 </option>
                 <option
                     value="wantToRead"
-                    onClick={changeShelf}
-
                 >
                     Want to Read</option>
                 <option
                     value="read"
-                    onClick={changeShelf}
-
                 >
                     Read
                 </option>
                 <option
                     value="none"
-                    onClick={changeShelf}
-
                 >
                     None
                 </option>
@@ -95,7 +100,7 @@ const BookShelfChanger = (props) => {
     )
 }
 BookShelfChanger.propTypes = {
-    shelf: PropTypes.string.isRequired,
+    shelf: PropTypes.string,
     changeShelf: PropTypes.func.isRequired
 }
 
@@ -114,5 +119,5 @@ const BookAuthors = (props) => {
     )
 }
 BookAuthors.propTypes = {
-    bookAuthors: PropTypes.array.isRequired
+    bookAuthors: PropTypes.array
 }

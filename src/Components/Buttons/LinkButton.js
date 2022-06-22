@@ -5,10 +5,17 @@ export const LinkButton = (props) => {
 
     return (
         <Link
-            to={{
-                pathname: `${props.url}`,
-            }}
+            to={
+                {
+                    pathname: `${props.url}`,
+                }
+            }
             className="close-search"
+            onClick={() => {
+                if (props.clearQuery) {
+                    props.clearQuery();
+                }
+            }}
         >
             {props.text || ''}
         </Link>

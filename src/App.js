@@ -2,46 +2,57 @@ import "./App.css";
 import { SerachPage } from "./Components/SearchPage/SerachPage";
 import { MyReads } from "./Components/MyReads/MyReads";
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import *  as BooksAPI from './utils/BooksAPI'
 
 function App() {
-  let navigate = useNavigate();
   const [library, setLibrary] = useState([]);
+  const [query, setQuery] = useState(sessionStorage.getItem('query') ? sessionStorage.getItem('query') : '');
+  const [currentlyShowing, setcurrentlyShowing] = useState([]);
+  const [flipState, setFlipState] = useState(true);
 
-  const navigateTo = (url) => {
-    navigate(url);
+
+  const clearQuery = () => {
+    setQuery('');
+    sessionStorage.setItem('query', '');
+    setcurrentlyShowing(library);
   }
 
-  const updateBook = async (book, shelf) => {
-    const updatedBook = {
-      id: book.id,
-      bookTitle: book.bookTitle,
-      url: book.url,
-      bookAuthors: book.bookAuthors,
-      shelf: shelf
+  const searchBooks = async (query_string) => {
+    setQuery(query_string)
+    sessionStorage.setItem('query', query_string);
+    if (query_string !== '') {
+      const response = await BooksAPI.search(query_string, 20);
+      if (!response.error) {
+        setcurrentlyShowing(response);
+        sessionStorage.setItem('currentlyShowing', JSON.stringify(response))
+      } else {
+      }
+    } else if (query_string === '') {
+      clearQuery();
     }
+    setFlipState(!flipState);
+  }
 
+
+  const updateBook = async (book, shelf) => {
     await BooksAPI.update(book, shelf);
-
+    book.shelf = shelf;
     setLibrary([...library.filter((b) => {
       return b.id !== book.id
-    }), updatedBook])
+    }), book])
+    setFlipState(!flipState);
   }
 
   useEffect(() => {
     const getLibrary = async () => {
       const response = await BooksAPI.getAll();
-      const arranged = response.map((book) => {
-        return ({
-          id: book.id,
-          bookTitle: book.title,
-          url: `url("${book.imageLinks.smallThumbnail}")`,
-          bookAuthors: book.authors,
-          shelf: book.shelf
-        })
-      })
-      setLibrary(arranged);
+      setLibrary(response)
+      if (!sessionStorage.getItem('query') && !sessionStorage.getItem('currentlyShowing')) {
+        setcurrentlyShowing(response);
+      } else {
+        setcurrentlyShowing(JSON.parse(sessionStorage.currentlyShowing))
+      }
     }
     getLibrary();
   }, [])
@@ -53,8 +64,11 @@ function App() {
           exact path="/search"
           element={
             <SerachPage
-              navigation={navigateTo}
-              library={library}
+              mainLibrary={library}
+              library={currentlyShowing}
+              query={query}
+              searchBooks={searchBooks}
+              clearQuery={clearQuery}
               changeShelf={updateBook}
             />
           }
@@ -64,9 +78,9 @@ function App() {
           exact path="/"
           element={
             <MyReads
-              navigation={navigateTo}
               library={library}
               changeShelf={updateBook}
+              clearQuery={clearQuery}
             />
           }
         />

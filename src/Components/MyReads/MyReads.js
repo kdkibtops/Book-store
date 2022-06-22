@@ -53,7 +53,7 @@ export const MyReads = (props) => {
                     }
                 </div>
             </div>
-            <AddBook />
+            <AddBook clearQuery={props.clearQuery} />
         </div>
     )
 }
